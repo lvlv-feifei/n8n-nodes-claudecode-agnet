@@ -1,0 +1,26 @@
+# Dependencies
+node_modules
+
+# Build outputs
+dist
+*.tgz
+
+# Logs
+npm-debug.log*
+
+# IDE
+.idea
+.vscode/launch.json
+.claude/
+
+# Archive
+_archive/
+
+# Lock files
+package-lock.json
+yarn.lock
+
+# Temp
+.DS_Store
+.tmp
+tmp

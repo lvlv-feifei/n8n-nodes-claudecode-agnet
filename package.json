@@ -1,0 +1,82 @@
+{
+  "name": "@lvlv-feifei/n8n-nodes-claudeagent",
+  "version": "1.0.0",
+  "description": "n8n community node for Claude Agent SDK integration",
+  "keywords": [
+    "n8n-community-node-package",
+    "n8n",
+    "claude",
+    "claude-agent",
+    "ai",
+    "anthropic",
+    "automation",
+    "workflow"
+  ],
+  "license": "MIT",
+  "homepage": "https://github.com/lvlv-feifei/n8n-nodes-claudeagent#readme",
+  "bugs": {
+    "url": "https://github.com/lvlv-feifei/n8n-nodes-claudeagent/issues"
+  },
+  "author": {
+    "name": "lvlv-feifei",
+    "email": "toolatesorry099@gmail.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/lvlv-feifei/n8n-nodes-claudeagent.git"
+  },
+  "engines": {
+    "node": ">=20.15"
+  },
+  "main": "index.js",
+  "scripts": {
+    "build": "npm run format:check && npx rimraf dist && tsc -p _dev/config/tsconfig.json && gulp --gulpfile _dev/config/gulpfile.js build:icons && gulp --gulpfile _dev/config/gulpfile.js build:schemas",
+    "format:check": "prettier nodes --check --config _dev/config/.prettierrc.js",
+    "dev": "tsc -p _dev/config/tsconfig.json --watch",
+    "format": "prettier nodes --write --config _dev/config/.prettierrc.js",
+    "lint": "eslint nodes package.json -c _dev/config/.eslintrc.js",
+    "lintfix": "eslint nodes package.json -c _dev/config/.eslintrc.js --fix",
+    "prepublishOnly": "npm run build",
+    "commit": "cz",
+    "install-local": "bash _dev/scripts/install-local.sh"
+  },
+  "files": [
+    "dist"
+  ],
+  "n8n": {
+    "n8nNodesApiVersion": 1,
+    "nodes": [
+      "dist/nodes/ClaudeAgent/ClaudeAgent.node.js"
+    ]
+  },
+  "dependencies": {
+    "@anthropic-ai/claude-agent-sdk": "^0.1.10"
+  },
+  "devDependencies": {
+    "@semantic-release/changelog": "^6.0.3",
+    "@semantic-release/commit-analyzer": "^13.0.0",
+    "@semantic-release/git": "^10.0.1",
+    "@semantic-release/github": "^11.0.1",
+    "@semantic-release/npm": "^12.0.1",
+    "@semantic-release/release-notes-generator": "^14.0.1",
+    "@types/node": "^22.13.10",
+    "@typescript-eslint/parser": "~8.32.0",
+    "commitizen": "^4.3.1",
+    "conventional-changelog-conventionalcommits": "^8.0.0",
+    "cz-conventional-changelog": "^3.3.0",
+    "eslint": "^8.57.0",
+    "eslint-plugin-n8n-nodes-base": "^1.16.3",
+    "gulp": "^5.0.0",
+    "prettier": "^3.5.3",
+    "semantic-release": "^24.2.0",
+    "typescript": "^5.8.2"
+  },
+  "peerDependencies": {
+    "n8n-workflow": "*"
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
+  }
+}
