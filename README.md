@@ -1,142 +1,144 @@
-# n8n Claude Agent 节点
+# n8n Claude Agent Node
 
-n8n 社区节点，集成 Claude Agent SDK，让 Claude AI 成为你自动化工作流的一部分。
+English | [简体中文](README.cn.md)
+
+An n8n community node integrating the Claude Agent SDK, bringing Claude AI into your automation workflows.
 
 [![npm version](https://img.shields.io/npm/v/@lvlv-feifei/n8n-nodes-claudeagent.svg)](https://www.npmjs.com/package/@lvlv-feifei/n8n-nodes-claudeagent)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 ---
 
-## 💡 订阅说明
+## 💡 Subscription Requirements
 
-**本节点适用于 Claude Pro 或 API 订阅用户**
+**This node is designed for Claude Pro or API subscription users**
 
-- ✅ 使用本地 Claude Code 登录状态，无需额外配置 API Key
-- ✅ 不会额外产生 API 费用，计入你的订阅计划额度内
-- ✅ 支持所有 Claude 模型：Sonnet 4.5、Opus、Haiku
-
----
-
-## 📸 节点展示
-
-### n8n 工作流界面
-<p align="center">
-  <img src="examples/workflow-example.png" alt="Claude Agent 节点在 n8n 工作流中的使用示例" width="800">
-</p>
-
-### 节点配置面板
-<p align="center">
-  <img src="examples/node-config.png" alt="Claude Agent 节点参数配置界面" width="600">
-</p>
+- ✅ Uses your local Claude Code authentication - no additional API key configuration required
+- ✅ No extra API charges - usage counts towards your subscription quota
+- ✅ Supports all Claude models: Sonnet 4.5, Opus, Haiku
 
 ---
 
-## 📦 安装方式
+## 📸 Node Preview
 
-### 前提条件
-- 已安装 [Claude Code](https://claude.ai/code) 并完成登录
-- n8n 版本 >= 0.200.0
+### n8n Workflow Interface
+<p align="center">
+  <img src="examples/workflow-example.png" alt="Claude Agent node in n8n workflow" width="800">
+</p>
+
+### Node Configuration Panel
+<p align="center">
+  <img src="examples/node-config.png" alt="Claude Agent node configuration interface" width="600">
+</p>
+
+---
+
+## 📦 Installation
+
+### Prerequisites
+- [Claude Code](https://claude.ai/code) installed and authenticated
+- n8n version >= 0.200.0
 - Node.js >= 20.15
 
-### 方法 1：npm 远程安装（推荐）
+### Method 1: npm Remote Installation (Recommended)
 ```bash
 cd ~/.n8n/nodes
 npm install @lvlv-feifei/n8n-nodes-claudeagent
 ```
 
-### 方法 2：本地开发安装
+### Method 2: Local Development Installation
 ```bash
 git clone https://github.com/lvlv-feifei/n8n-nodes-claudeagent.git
 cd n8n-nodes-claudeagent
 npm run install-local
 ```
 
-安装完成后重启 n8n，在节点列表中搜索 "Claude Agent"。
+After installation, restart n8n and search for "Claude Agent" in the node list.
 
 ---
 
-## 🚀 快速开始
+## 🚀 Quick Start
 
-1. **添加节点**
-   在 n8n 工作流中搜索 "Claude Agent" → 拖拽到画布
+1. **Add Node**
+   Search for "Claude Agent" in your n8n workflow → Drag to canvas
 
-2. **配置并运行**
-   选择操作类型 → 输入 Prompt → 执行工作流
-
----
-
-## 🎯 节点能力
-
-### 会话操作
-
-| 操作 | 说明 | 典型场景 |
-|------|------|----------|
-| **New Query** | 启动新对话 | 独立任务、代码生成 |
-| **Continue** | 继续最近会话 | 多轮对话、迭代优化 |
-| **Resume** | 恢复指定会话 | 回到历史节点继续 |
-| **Fork** | 分叉会话 | 从某个点尝试不同方案 |
-
-### 常用参数
-
-| 参数 | 类型 | 默认值 | 说明 |
-|------|------|--------|------|
-| `prompt` | string | - | **必填** 发送给 Claude 的指令 |
-| `model` | select | `sonnet` | 模型选择：Sonnet 4.5 / Opus / Haiku |
-| `projectPath` | string | - | 工作目录路径（相对或绝对） |
-| `outputFormat` | select | `summary` | 输出格式：Summary / Full / Text Only |
-| `maxTurns` | number | 25 | 最大对话轮数 |
-| `timeout` | number | 300 | 超时时间（秒） |
-
-### 高阶参数
-
-| 参数 | 类型 | 说明 |
-|------|------|------|
-| `systemPromptMode` | select | 系统提示模式：Default / Append / Custom |
-| `systemPrompt` | string | 自定义系统提示词 |
-| `allowedTools` | array | 工具白名单（优先级高） |
-| `disallowedTools` | array | 工具黑名单 |
-| `permissionMode` | select | 权限模式：Bypass All / Accept Edits / Ask Always / Plan Mode |
-| `additionalDirectories` | array | 额外的目录访问权限 |
-| `fallbackModel` | select | 主模型过载时的备用模型 |
-| `maxThinkingTokens` | number | 扩展思考的 token 上限 |
-
-### 可控制的工具
-
-| 工具 | 功能 | 风险级别 |
-|------|------|----------|
-| `Bash` | 执行终端命令 | 🔴 高 |
-| `Edit` | 编辑文件内容 | 🟠 中 |
-| `Write` | 写入新文件 | 🟠 中 |
-| `Read` | 读取文件 | 🟢 低 |
-| `Glob` | 文件模式匹配 | 🟢 低 |
-| `Grep` | 搜索文件内容 | 🟢 低 |
-| `Task` | 启动子代理任务 | 🟠 中 |
-| `TodoWrite` | 管理任务列表 | 🟢 低 |
-| `WebFetch` | 获取网页内容 | 🟢 低 |
-| `WebSearch` | 网页搜索 | 🟢 低 |
-
-> **安全提示**：生产环境建议使用 `allowedTools` 限制高风险工具（Bash、Edit、Write）
+2. **Configure & Run**
+   Select operation type → Input prompt → Execute workflow
 
 ---
 
-## 📚 Claude Code 示例工作流
+## 🎯 Node Capabilities
 
-查看 `examples/` 目录获取更多实际工作流案例
+### Session Operations
 
-> 🚧 示例库持续更新中...
+| Operation | Description | Typical Use Cases |
+|-----------|-------------|-------------------|
+| **New Query** | Start a new conversation | Independent tasks, code generation |
+| **Continue** | Continue the most recent session | Multi-turn conversations, iterative refinement |
+| **Resume** | Resume a specific session by ID | Return to a historical checkpoint |
+| **Fork** | Fork a session from a specific point | Try different approaches from a checkpoint |
+
+### Common Parameters
+
+| Parameter | Type | Default | Description |
+|-----------|------|---------|-------------|
+| `prompt` | string | - | **Required** Instructions to send to Claude |
+| `model` | select | `sonnet` | Model selection: Sonnet 4.5 / Opus / Haiku |
+| `projectPath` | string | - | Working directory path (relative or absolute) |
+| `outputFormat` | select | `summary` | Output format: Summary / Full / Text Only |
+| `maxTurns` | number | 25 | Maximum conversation turns |
+| `timeout` | number | 300 | Timeout duration (seconds) |
+
+### Advanced Parameters
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `systemPromptMode` | select | System prompt mode: Default / Append / Custom |
+| `systemPrompt` | string | Custom system prompt text |
+| `allowedTools` | array | Tool whitelist (takes priority) |
+| `disallowedTools` | array | Tool blacklist |
+| `permissionMode` | select | Permission mode: Bypass All / Accept Edits / Ask Always / Plan Mode |
+| `additionalDirectories` | array | Additional directory access permissions |
+| `fallbackModel` | select | Backup model when primary is overloaded |
+| `maxThinkingTokens` | number | Maximum tokens for extended thinking |
+
+### Controllable Tools
+
+| Tool | Function | Risk Level |
+|------|----------|------------|
+| `Bash` | Execute terminal commands | 🔴 High |
+| `Edit` | Modify file contents | 🟠 Medium |
+| `Write` | Write new files | 🟠 Medium |
+| `Read` | Read files | 🟢 Low |
+| `Glob` | File pattern matching | 🟢 Low |
+| `Grep` | Search file contents | 🟢 Low |
+| `Task` | Launch sub-agent tasks | 🟠 Medium |
+| `TodoWrite` | Manage task lists | 🟢 Low |
+| `WebFetch` | Fetch web content | 🟢 Low |
+| `WebSearch` | Web search | 🟢 Low |
+
+> **Security Tip**: In production environments, use `allowedTools` to restrict high-risk tools (Bash, Edit, Write)
 
 ---
 
-## 🔗 相关链接
+## 📚 Example Workflows
 
-- [n8n 官网](https://n8n.io/)
+Check the `examples/` directory for more practical workflow examples
+
+> 🚧 Example library continuously updating...
+
+---
+
+## 🔗 Related Links
+
+- [n8n Official Website](https://n8n.io/)
 - [Claude Agent SDK](https://www.npmjs.com/package/@anthropic-ai/claude-agent-sdk)
 - [Anthropic](https://www.anthropic.com/)
-- [问题反馈](https://github.com/lvlv-feifei/n8n-nodes-claudeagent/issues)
+- [Report Issues](https://github.com/lvlv-feifei/n8n-nodes-claudeagent/issues)
 
 ---
 
-## 📄 开源协议
+## 📄 License
 
 MIT License © 2025 lvlv-feifei
 
